@@ -1,0 +1,34 @@
+{
+  "name": "featherweb",
+  "version": "0.1.0",
+  "description": "Web components for feather icons",
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adwher/featherweb.git"
+  },
+  "keywords": [
+    "feather",
+    "icons",
+    "web",
+    "component",
+    "javascript"
+  ],
+  "author": "Andres Celis <adwher@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adwher/featherweb/issues"
+  },
+  "homepage": "https://github.com/adwher/featherweb#readme",
+  "dependencies": {
+    "feather-icons": "^4.28.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  }
+}
