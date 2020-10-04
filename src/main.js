@@ -11,39 +11,57 @@ class FeatherIcon extends HTMLElement
     {
         super()
         this.attachShadow({ mode: "open" })
-    }
 
-    connectedCallback()
-    {
         // box
 
-        const box = document.createElement("div")
-        box.id = "icon"
+        this.box = document.createElement("div")
 
-        // style
+        this.box.id = "icon"
+        this.box.style.display = "flex"
+    }
 
-        box.style.display = "flex"
-
-        if (this.hasAttribute("color"))
+    attributeChangedCallback(attr, old, value)
+    {
+        switch(attr)
         {
-            box.style.color = this.getAttribute("color")
+            case "name": {
+                this.changeIcon(value)
+                break
+            }
+
+            case "color": {
+                this.changeColor(value)
+                break
+            }
+
+            case "size": {
+                this.changeIcon(this.getAttribute("name"), value)
+                break
+            }
         }
+    }
 
-        // icon
-
-        const name = this.getAttribute("name") || "feather"
+    changeIcon(name = "feather", size = 20)
+    {
         const icon = feather.icons[name] || feather.icons["feather"]
-
-        const size = this.getAttribute("size") || "20"
 
         const options = {
             "width": size,
             "height": size,
-            "stroke-width": 1.8
+            "stroke-width": 1.6
         }
 
-        box.innerHTML = icon.toSvg(options)
-        this.shadowRoot.appendChild(box)
+        this.box.innerHTML = icon.toSvg(options)
+    }
+
+    changeColor(color)
+    {
+        this.box.style.color = color
+    }
+
+    connectedCallback()
+    {
+        this.shadowRoot.appendChild(this.box)
     }
 }
 
