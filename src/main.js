@@ -4,7 +4,7 @@ class FeatherIcon extends HTMLElement
 {
     static get observedAttributes()
     {
-        return ["name", "size", "color"]
+        return ["name", "size", "color", "thin"]
     }
 
     constructor()
@@ -20,35 +20,41 @@ class FeatherIcon extends HTMLElement
         this.box.style.display = "flex"
     }
 
-    attributeChangedCallback(attr, old, value)
+    attributeChangedCallback(attr, _, value)
     {
         switch(attr)
         {
-            case "name": {
-                this.changeIcon(value)
-                break
-            }
-
             case "color": {
                 this.changeColor(value)
                 break
             }
-
-            case "size": {
-                this.changeIcon(this.getAttribute("name"), value)
+            
+            case "name":
+            case "size":
+            case "thin": {
+                this.updateIcon()
                 break
             }
         }
     }
 
-    changeIcon(name = "feather", size = 20)
+    updateIcon()
+    {
+        const name = this.getAttribute("name") || "feather"
+        const size = this.getAttribute("size") || "20"
+        const thin = this.getAttribute("thin") || "1.5"
+
+        this.changeIcon(name, size, thin)
+    }
+
+    changeIcon(name = "feather", size, thin)
     {
         const icon = feather.icons[name] || feather.icons["feather"]
 
         const options = {
             "width": size,
             "height": size,
-            "stroke-width": 1.6
+            "stroke-width": thin
         }
 
         this.box.innerHTML = icon.toSvg(options)
