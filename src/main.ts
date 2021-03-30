@@ -1,6 +1,8 @@
-import feather from 'feather-icons'
+import { icons } from "feather-icons"
 
 class FeatherIcon extends HTMLElement {
+    box: HTMLDivElement
+
     static get observedAttributes() {
         return ["name", "size", "color", "thin"]
     }
@@ -17,7 +19,7 @@ class FeatherIcon extends HTMLElement {
         this.box.style.display = "flex"
     }
 
-    attributeChangedCallback(attr, _, value) {
+    attributeChangedCallback(attr: string, _: any, value: any) {
         switch(attr) {
             case "color": {
                 this.changeColor(value)
@@ -35,14 +37,14 @@ class FeatherIcon extends HTMLElement {
 
     updateIcon() {
         const name = this.getAttribute("name") || "feather"
-        const size = this.getAttribute("size") || "20"
+        const size = this.getAttribute("size") || "18"
         const thin = this.getAttribute("thin") || "1.5"
 
         this.changeIcon(name, size, thin)
     }
 
-    changeIcon(name = "feather", size, thin) {
-        const icon = feather.icons[name] || feather.icons["feather"]
+    changeIcon(name = "feather", size: string, thin: string) {
+        const icon = icons[name] || icons["feather"]
 
         const options = {
             "width": size,
@@ -53,7 +55,7 @@ class FeatherIcon extends HTMLElement {
         this.box.innerHTML = icon.toSvg(options)
     }
 
-    changeColor(color) {
+    changeColor(color: string) {
         this.box.style.color = color
     }
 

@@ -1,13 +1,31 @@
 name: Publish
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - "v**"
 
 jobs:
+  test:
+    name: Run all test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm install
+      - run: npm test
+
   npm:
     name: Publish NPM
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v2
