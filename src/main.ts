@@ -1,6 +1,6 @@
 import { icons } from "feather-icons"
 
-class FeatherIcon extends HTMLElement {
+export class FeatherIcon extends HTMLElement {
     box: HTMLDivElement
 
     static get observedAttributes() {
@@ -37,7 +37,7 @@ class FeatherIcon extends HTMLElement {
 
     updateIcon() {
         const name = this.getAttribute("name") || "feather"
-        const size = this.getAttribute("size") || "18"
+        const size = this.getAttribute("size") || "16"
         const thin = this.getAttribute("thin") || "1.5"
 
         this.changeIcon(name, size, thin)
