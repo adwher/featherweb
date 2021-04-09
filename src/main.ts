@@ -1,10 +1,10 @@
 import { icons } from "feather-icons"
 
-export class FeatherIcon extends HTMLElement {
+class FeatherIcon extends HTMLElement {
     box: HTMLDivElement
 
     static get observedAttributes() {
-        return ["name", "size", "color", "thin"]
+        return ["name", "size", "color", "thin", "rotate"]
     }
 
     constructor() {
@@ -25,6 +25,11 @@ export class FeatherIcon extends HTMLElement {
                 this.changeColor(value)
                 break
             }
+
+            case "rotate": {
+                this.rotateIcon(value)
+                break
+            }
             
             case "name":
             case "size":
@@ -36,11 +41,11 @@ export class FeatherIcon extends HTMLElement {
     }
 
     updateIcon() {
-        const name = this.getAttribute("name") || "feather"
-        const size = this.getAttribute("size") || "16"
-        const thin = this.getAttribute("thin") || "1.5"
+        const nameValue = this.getAttribute("name") || "feather"
+        const sizeValue = this.getAttribute("size") || "16"
+        const thinValue = this.getAttribute("thin") || "1.5"
 
-        this.changeIcon(name, size, thin)
+        this.changeIcon(nameValue, sizeValue, thinValue)
     }
 
     changeIcon(name = "feather", size: string, thin: string) {
@@ -53,6 +58,10 @@ export class FeatherIcon extends HTMLElement {
         }
 
         this.box.innerHTML = icon.toSvg(options)
+    }
+
+    rotateIcon(value: string) {
+        this.box.style.transform = `rotate(${value})`
     }
 
     changeColor(color: string) {
